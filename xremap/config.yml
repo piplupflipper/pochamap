@@ -1,0 +1,81 @@
+virtual_modifiers:
+  - fn_1
+  - fn_2
+
+modmap:
+  - remap:
+      muhenkan:
+        held: fn_1
+        alone: muhenkan
+        alone_timeout_millis: 300
+      henkan:
+        held: fn_2
+        alone: henkan
+        alone_timeout_millis: 300
+
+keymap:
+  - name: custom key bindings
+    remap:
+      ctrl-j: [muhenkan, esc]
+      apostrophe: enter          # :          -> enter
+      semicolon: apostrophe      # ;          -> :
+      shift-semicolon: semicolon # s-:        -> ;
+      leftbrace: backspace       # @          -> backspace
+      shift-leftbrace: delete    # s-@        -> delete
+      ctrl-leftbrace: delete     # c-@        -> delete
+      shift-slash: ro            # s-/        -> \
+      capslock: enter            # caps       -> enter
+      grave: backspace           # 半角全角   -> backspace
+      shift-grave: delete        # s-半角全角 -> backspace
+      ctrl-grave: delete         # c-半角全角 -> backspace
+
+      # vim-like
+      fn_1-h: left
+      fn_1-j: down
+      fn_1-k: up
+      fn_1-l: right
+
+      # fps-like
+      fn_1-a: left
+      fn_1-s: down
+      fn_1-w: up
+      fn_1-d: right
+
+      # alt-tabでのウィンドウ選択時にvim-like
+      # alt-h: left
+      # alt-j: down
+      # alt-k: up
+      # alt-l: right
+
+      # 記号類
+      fn_2-a: leftbrace          # @
+      fn_2-b: shift-leftbrace    # `
+      fn_2-c: equal              # ^
+      fn_2-d: shift-4            # $
+      fn_2-e: shift-6            # &
+      # fn_2-f
+      # fn_2-g
+      fn_2-h: shift-3            # #
+      fn_2-i: shift-1            # !
+      # fn_2-j
+      # fn_2-k
+      fn_2-l: shift-yen          # |
+      fn_2-m: shift-semicolon    # +
+      # fn_2-n
+      # fn_2-o
+      fn_2-p: shift-5            # %
+      fn_2-q: shift-slash        # ?
+      # fn_2-r
+      fn_2-s: shift-7            # '
+      fn_2-t: shift-equal        # ~
+      fn_2-u: shift-ro           # _
+      # fn_2-v
+      fn_2-w: shift-2            # "
+      fn_2-x: shift-apostrophe   # *
+      # fn_2-y
+      # fn_2-z
+
+# virtual_modifiersについて
+# 前提として、imeのオンオフはmozc側でキー設定している
+# ところで、virtual_modifiersに指定したキーは、単押しが有効にならない
+# そこで、一切使用していないキーをvirtual_modifiersとして指定することで、仮想モディファイアと単押しを両立する

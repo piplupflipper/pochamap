@@ -1,0 +1,145 @@
+# キーバインド説明画像の元データ
+# tools/gen_images.py がこのファイルから images/*.svg を生成する
+# AHK（ahk/）を変更したら、このファイルも合わせて直して画像を生成し直す
+
+keyboard:
+  name: REALFORCE 91UDK（初代・日本語配列・テンキーレス）
+  # キーの位置と幅の単位は 1 キー分（1u）。寸法は概形で、実機の採寸ではない
+  rows:
+    - y: 0
+      keys:
+        - {id: hankaku, label: 半/全}
+        - {id: "1", label: "1"}
+        - {id: "2", label: "2"}
+        - {id: "3", label: "3"}
+        - {id: "4", label: "4"}
+        - {id: "5", label: "5"}
+        - {id: "6", label: "6"}
+        - {id: "7", label: "7"}
+        - {id: "8", label: "8"}
+        - {id: "9", label: "9"}
+        - {id: "0", label: "0"}
+        - {id: minus, label: "-"}
+        - {id: caret, label: "^"}
+        - {id: yen, label: "¥"}
+        - {id: bs, label: BS}
+    - y: 1
+      keys:
+        - {id: tab, label: Tab, w: 1.5}
+        - {id: q, label: Q}
+        - {id: w, label: W}
+        - {id: e, label: E}
+        - {id: r, label: R}
+        - {id: t, label: T}
+        - {id: y, label: "Y"}
+        - {id: u, label: U}
+        - {id: i, label: I}
+        - {id: o, label: O}
+        - {id: p, label: P}
+        - {id: at, label: "@"}
+        - {id: lbracket, label: "["}
+        # Enter は 2 段にまたがる逆 L 字。w は上段の幅、w2 は下段の幅
+        - {id: enter, label: Enter, w: 1.5, shape: enter, w2: 1.25}
+    - y: 2
+      keys:
+        - {id: caps, label: Caps, w: 1.75}
+        - {id: a, label: A}
+        - {id: s, label: S}
+        - {id: d, label: D}
+        - {id: f, label: F}
+        - {id: g, label: G}
+        - {id: h, label: H}
+        - {id: j, label: J}
+        - {id: k, label: K}
+        - {id: l, label: L}
+        - {id: semicolon, label: ";"}
+        - {id: colon, label: ":"}
+        - {id: rbracket, label: "]"}
+    - y: 3
+      keys:
+        - {id: lshift, label: Shift, w: 2.25}
+        - {id: z, label: Z}
+        - {id: x, label: X}
+        - {id: c, label: C}
+        - {id: v, label: V}
+        - {id: b, label: B}
+        - {id: n, label: N}
+        - {id: m, label: M}
+        - {id: comma, label: ","}
+        - {id: period, label: "."}
+        - {id: slash, label: "/"}
+        - {id: backslash, label: "\\"}
+        - {id: rshift, label: Shift, w: 1.75}
+    - y: 4
+      keys:
+        # Space の中心が B の中心（x = 6.75）の真下に来るように幅を決めている
+        - {id: lctrl, label: Ctrl, w: 1.5}
+        - {id: lwin, label: Win, w: 1.25}
+        - {id: lalt, label: Alt, w: 1.25}
+        - {id: muhenkan, label: 無変換, w: 1.5}
+        - {id: space, label: Space, w: 2.5}
+        - {id: henkan, label: 変換, w: 1.5}
+        - {id: kana, label: かな, w: 1.25}
+        - {id: ralt, label: Alt, w: 1.25}
+        - {id: rwin, label: Win}
+        - {id: app, label: App}
+        - {id: rctrl, label: Ctrl}
+
+# kind ごとに色を変える
+#   remap:  別のキーへの置き換え
+#   combo:    Ctrl や Shift と一緒に押したときだけ変わるもの
+#   modifier: 修飾キー（押している間だけ別の割り当てに切り替えるキー）
+#   output:   修飾キーを押している間に出力されるもの
+#   ahk:    AHK 自体の操作
+layers:
+  - id: base
+    title: 通常時
+    file: images/base.svg
+    keys:
+      hankaku: {to: BS, sub: "Shift/Ctrl: Del", kind: remap}
+      at: {to: BS, sub: "Shift/Ctrl: Del", kind: remap}
+      caps: {to: Enter, kind: remap}
+      colon: {to: Enter, kind: remap}
+      semicolon: {to: ":", sub: "Shift: ;", kind: remap}
+      slash: {to: "/", sub: "Shift: \\", kind: combo}
+      j: {to: J, sub: "Ctrl: Esc", kind: combo}
+      muhenkan: {to: IMEオフ, sub: "押しながら: 移動", kind: modifier}
+      henkan: {to: IMEオン, sub: "押しながら: 記号", kind: modifier}
+
+  - id: henkan
+    title: 変換キーを押している間
+    file: images/henkan.svg
+    keys:
+      henkan: {to: 押下中, kind: modifier}
+      a: {to: "@", kind: output}
+      b: {to: "`", kind: output}
+      c: {to: "^", kind: output}
+      d: {to: "$", kind: output}
+      e: {to: "&", kind: output}
+      f: {to: "(", kind: output}
+      h: {to: "#", kind: output}
+      i: {to: "!", kind: output}
+      j: {to: ")", kind: output}
+      l: {to: "|", kind: output}
+      m: {to: "+", kind: output}
+      p: {to: "%", kind: output}
+      q: {to: "?", kind: output}
+      s: {to: "'", kind: output}
+      t: {to: "~", kind: output}
+      u: {to: "_", kind: output}
+      w: {to: "\"", kind: output}
+      x: {to: "*", kind: output}
+
+  - id: muhenkan
+    title: 無変換キーを押している間
+    file: images/muhenkan.svg
+    keys:
+      muhenkan: {to: 押下中, kind: modifier}
+      h: {to: "←", kind: output}
+      j: {to: "↓", kind: output}
+      k: {to: "↑", kind: output}
+      l: {to: "→", kind: output}
+      w: {to: "↑", kind: output}
+      a: {to: "←", kind: output}
+      s: {to: "↓", kind: output}
+      d: {to: "→", kind: output}
