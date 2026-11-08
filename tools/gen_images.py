@@ -24,9 +24,11 @@ DOCS = [ROOT / "README.md", ROOT / "docs" / "思想.md"]
 
 U = 56  # 1u のピクセル数
 GAP = 4  # キーとキーの隙間
-PAD = 24  # 画像の外周の余白
+PAD = 12  # 画像の外周の余白
 HEADER = 0  # 画像の上端からキーまでの、外周の余白に足す高さ
-LEGEND = 40  # 凡例の高さ
+LEGEND_GAP = 12  # キーと凡例の隙間
+LEGEND = LEGEND_GAP + 16  # 凡例の高さ（隙間を含む）
+RADIUS = 6  # キーの角丸の半径
 
 KIND_LABELS = {
     "remap": "置き換え",
@@ -83,16 +85,26 @@ def key_shape(k: dict, cls: str) -> str:
     y0 = PAD + HEADER + k["y"] * U + GAP / 2
     w = k["w"] * U - GAP
     if k.get("shape") == "enter":
-        # 上段が w、下段が w2 の逆 L 字（右端を揃える）
+        # 上段が w、下段が w2 の逆 L 字（右端を揃える）。角はほかのキーと同じ半径で丸める
         w2 = k["w2"] * U - GAP
         x1 = x0 + w
         xl = x1 - w2
         y1 = y0 + U - GAP
         y2 = y0 + 2 * U - GAP
-        d = f"M{x0},{y0} H{x1} V{y2} H{xl} V{y1} H{x0} Z"
-        return f'<path class="key {cls}" d="{d}" stroke-linejoin="round"/>'
+        r = RADIUS
+        arc = f"A{r},{r} 0 0 1"  # 出っ張った角
+        arc_in = f"A{r},{r} 0 0 0"  # へこんだ角（上段と下段の境目）
+        d = (
+            f"M{x0 + r},{y0} H{x1 - r} {arc} {x1},{y0 + r}"
+            f" V{y2 - r} {arc} {x1 - r},{y2}"
+            f" H{xl + r} {arc} {xl},{y2 - r}"
+            f" V{y1 + r} {arc_in} {xl - r},{y1}"
+            f" H{x0 + r} {arc} {x0},{y1 - r}"
+            f" V{y0 + r} {arc} {x0 + r},{y0} Z"
+        )
+        return f'<path class="key {cls}" d="{d}"/>'
     h = U - GAP
-    return f'<rect class="key {cls}" x="{x0}" y="{y0}" width="{w}" height="{h}" rx="6"/>'
+    return f'<rect class="key {cls}" x="{x0}" y="{y0}" width="{w}" height="{h}" rx="{RADIUS}"/>'
 
 
 def text_width(text: str, size: float) -> float:
@@ -167,7 +179,7 @@ def render(keyboard: dict, keys: list[dict], layer: dict) -> str:
         f"<style>{STYLE}</style>"
         f'<rect class="bg" width="100%" height="100%" rx="12"/>'
         + "".join(body)
-        + legend(kinds, PAD + HEADER + height_u * U + 16)
+        + legend(kinds, PAD + HEADER + height_u * U + LEGEND_GAP)
         + "</svg>\n"
     )
 
