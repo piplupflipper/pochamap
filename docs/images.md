@@ -1,14 +1,20 @@
 # キーバインド画像を作り直す
 
 `images/*.svg` は、`layout/keymap.yaml` から `tools/gen_images.py` で生成する。
+ファイル名には画像の内容のハッシュが入る（例: `images/base.3d9667a7.svg`）。
 `ahk/` のキーバインドを変えたら、`layout/keymap.yaml` も同じように直し、リポジトリのルートで次を実行する。
 
 ```sh
 uv run tools/gen_images.py
 ```
 
-生成すると、`README.md` と `docs/思想.md` の画像リンクの末尾の `?v=` も画像の内容のハッシュに書き換わる。
-GitHub の README は画像のキャッシュが残り、push しても古い画像を表示することがあるため、URL を変えてキャッシュを避けている。
+生成すると、`README.md` と `docs/思想.md` の画像リンクも新しいファイル名に書き換わり、同じ画像の古いハッシュ付きファイルは消える。
+生成後は、消えたファイルも含めて `git add -A images` でコミットする。
+
+ファイル名にハッシュを入れているのは、GitHub の README で画像のキャッシュを避けるため。
+README の相対リンクの画像は `github.com/<リポジトリ>/raw/<ブランチ>/<パス>` から `raw.githubusercontent.com` へリダイレクトされ、このときクエリ文字列（`?v=` など）は落ちる。
+リダイレクト先は `cache-control: max-age=300` で返るため、push 直後は古い画像を表示することがある（2026-11-08 に `curl -I` で確認）。
+ファイル名を変えればリダイレクト先の URL も変わるので、キャッシュに当たらない。
 
 ## `layout/keymap.yaml` の書き方
 

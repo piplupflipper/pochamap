@@ -1,5 +1,6 @@
 # キーバインド説明画像の元データ
 # tools/gen_images.py がこのファイルから images/*.svg を生成する
+# layers[].file はハッシュ無しの名前。実際のファイル名には内容のハッシュが入る（docs/images.md）
 # AHK（ahk/）を変更したら、このファイルも合わせて直して画像を生成し直す
 
 keyboard:
@@ -73,17 +74,17 @@ keyboard:
     - y: 4
       keys:
         # Space の中心が B の中心（x = 6.75）の真下に来るように幅を決めている
+        # Win と App（コンテキストメニュー）は 1u、Alt は無変換・変換と同じ幅
         - {id: lctrl, label: Ctrl, w: 1.5}
-        - {id: lwin, label: Win, w: 1.25}
-        - {id: lalt, label: Alt, w: 1.25}
+        - {id: lwin, label: Win}
+        - {id: lalt, label: Alt, w: 1.5}
         - {id: muhenkan, label: 無変換, w: 1.5}
         - {id: space, label: Space, w: 2.5}
         - {id: henkan, label: 変換, w: 1.5}
-        - {id: kana, label: かな, w: 1.25}
-        - {id: ralt, label: Alt, w: 1.25}
-        - {id: rwin, label: Win}
+        - {id: ralt, label: Alt, w: 1.5}
+        - {id: kana, label: かな, w: 1.5}
         - {id: app, label: App}
-        - {id: rctrl, label: Ctrl}
+        - {id: rctrl, label: Ctrl, w: 1.5}
 
 # kind ごとに色を変える
 #   remap:  別のキーへの置き換え
