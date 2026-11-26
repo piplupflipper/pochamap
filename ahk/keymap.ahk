@@ -111,6 +111,12 @@ vkBB:: SendInput "{vkBA}" ; Semicolon(raw-keyboard)::Colon
 	imestate := IMEGetstate()
 	if (imestate = 1) {
 		SendInput "{vkF3}"
+		; herdr のデスクトップ版 (herdr-app) では、変換中の文字を確定した直後に送った Esc が
+		; アプリ内のプログラムに届かない。確定を待ってから Esc を送る
+		; (https://github.com/piplupflipper/pochamap/issues/3)
+		if WinActive("ahk_exe herdr-app.exe") {
+			Sleep 50
+		}
 	}
 	SendInput "{Esc}"
 }
